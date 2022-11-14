@@ -1,12 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap'
 import { Link, useParams } from 'react-router-dom'
-import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap'
 import { Rating } from '../components'
-import products from '../products'
 
 function ProductPage() {
   const { id } = useParams()
-  const product = products.find((p) => p._id === id)
+
+  const [product, setProduct] = useState({})
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(`/api/v1/products/${id}`)
+
+      setProduct(data)
+    }
+
+    fetchProduct()
+  }, [id])
 
   return (
     <>
@@ -26,6 +37,7 @@ function ProductPage() {
               <Rating
                 value={product.rating}
                 text={`${product.numReviews} reviews`}
+                color='#f8e825'
               />
             </ListGroup.Item>
             <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
