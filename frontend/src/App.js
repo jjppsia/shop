@@ -1,7 +1,7 @@
 import React from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
-import { Header, Footer } from './components'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { Footer, Header } from './components'
 import { HomePage, ProductPage } from './pages'
 
 function App() {
