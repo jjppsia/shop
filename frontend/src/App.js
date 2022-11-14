@@ -2,7 +2,7 @@ import React from 'react'
 import { Container } from 'react-bootstrap'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { Footer, Header } from './components'
-import { HomePage, ProductPage } from './pages'
+import { CartPage, HomePage, ProductPage } from './pages'
 
 function App() {
   return (
@@ -13,6 +13,11 @@ function App() {
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/product/:id' element={<ProductPage />} />
+            <Route path='/cart'>
+              <Route index element={<CartPage />} />
+              <Route path=':id' element={<CartPage />} />
+            </Route>
+            <Route path='*' element={<h1>Not Found</h1>} />
           </Routes>
         </Container>
       </main>
