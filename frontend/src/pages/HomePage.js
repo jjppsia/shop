@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Col, Row } from 'react-bootstrap'
-import { Product } from '../components'
+import { useDispatch, useSelector } from 'react-redux'
 import { listProducts } from '../actions/productActions'
-import { Loader, Message } from '../components'
+import { Loader, Message, Product } from '../components'
 
 function HomePage() {
   const dispatch = useDispatch()
