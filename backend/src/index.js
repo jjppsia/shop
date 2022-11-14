@@ -1,26 +1,16 @@
 import 'dotenv/config'
 import chalk from 'chalk'
 import express from 'express'
+import logger from 'morgan'
 import connectDB from './config/db.js'
-import products from './data/products.js'
+import productRoutes from './routes/productRoutes.js'
 
 const PORT = process.env.PORT || 5000
 
 const app = express()
 
-app.get('/', (req, res) => {
-  res.send('API is running...')
-})
-
-app.get('/api/v1/products', (req, res) => {
-  res.json(products)
-})
-
-app.get('/api/v1/products/:id', (req, res) => {
-  const product = products.find((p) => p._id === req.params.id)
-
-  res.json(product)
-})
+app.use(logger('dev'))
+app.use('/api/v1/products', productRoutes)
 
 const start = async () => {
   try {
