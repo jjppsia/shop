@@ -2,6 +2,7 @@ import 'dotenv/config'
 import chalk from 'chalk'
 import express from 'express'
 import logger from 'morgan'
+
 import connectDB from './config/db.js'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'

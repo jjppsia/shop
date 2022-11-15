@@ -1,3 +1,4 @@
+import { StatusCodes } from 'http-status-codes'
 import Product from '../models/productModel.js'
 
 /**
@@ -9,9 +10,9 @@ const getProducts = async (req, res) => {
   try {
     const products = await Product.find({})
 
-    res.status(200).json(products)
+    res.status(StatusCodes.OK).json(products)
   } catch (error) {
-    res.status(404).json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message })
   }
 }
 
@@ -20,15 +21,15 @@ const getProducts = async (req, res) => {
  * @route   GET /api/v1/products/:id
  * @access  Public
  **/
-const getProductById = async (req, res) => {
+const getProductById = async (req, res, next) => {
   const { id: _id } = req.params
 
   try {
     const product = await Product.findById(_id)
 
-    res.status(200).json(product)
+    res.status(StatusCodes.OK).json(product)
   } catch (error) {
-    res.status(404).json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message })
   }
 }
 
