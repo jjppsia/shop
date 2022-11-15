@@ -1,4 +1,5 @@
 import User from '../models/userModel.js'
+import generateToken from '../utils/generateToken.js'
 
 /**
  * @desc    Auth user & get token
@@ -22,7 +23,7 @@ const authUser = async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: null,
+      token: generateToken(user._id),
     })
   } catch (error) {
     res.status(500).json({ message: error.message })
