@@ -77,7 +77,6 @@ const authUser = async (req, res) => {
  * @route GET /api/v1/users/profile
  * @access Private
  */
-
 const getUserProfile = async (req, res) => {
   const { _id } = req.user
 
@@ -102,4 +101,41 @@ const getUserProfile = async (req, res) => {
   }
 }
 
-export { registerUser, authUser, getUserProfile }
+/**
+ * @desc Update user profile
+ * @route GET /api/v1/users/profile
+ * @access Private
+ */
+const updateUserProfile = async (req, res) => {
+  const { _id } = req.user
+  const { name, email, password } = req.body
+
+  try {
+    const user = await User.findOne({ _id })
+
+    if (!user) {
+      res.status(StatusCodes.NOT_FOUND)
+      throw new Error('User not found')
+    }
+
+    user.name = name || user.name
+    user.email = email || user.email
+    user.password = password || user.password
+
+    const updatedUser = await user.save()
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+      token: generateToken(updatedUser._id),
+    })
+  } catch (error) {
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: error.message })
+  }
+}
+
+export { registerUser, authUser, getUserProfile, updateUserProfile }
