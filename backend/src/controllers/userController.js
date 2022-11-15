@@ -3,10 +3,50 @@ import User from '../models/userModel.js'
 import generateToken from '../utils/generateToken.js'
 
 /**
+ * @desc    Register a new user
+ * @route   POST /api/v1/users
+ * @access  Public
+ */
+const registerUser = async (req, res) => {
+  const { name, email, password } = req.body
+
+  try {
+    const user = await User.findOne({ email })
+
+    if (user) {
+      res.status(StatusCodes.BAD_REQUEST)
+      throw new Error('User already exists')
+    }
+
+    const newUser = await User.create({
+      name,
+      email,
+      password,
+    })
+
+    if (!newUser) {
+      res.status(StatusCodes.BAD_REQUEST)
+      throw new Error('Invalid user data')
+    }
+
+    res.status(StatusCodes.CREATED).json({
+      _id: newUser._id,
+      name: newUser.name,
+      email: newUser.email,
+      isAdmin: newUser.isAdmin,
+    })
+  } catch (error) {
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: error.message })
+  }
+}
+
+/**
  * @desc    Auth user & get token
  * @route   POST /api/v1/users/login
  * @access  Public
- **/
+ */
 const authUser = async (req, res) => {
   const { email, password } = req.body
 
@@ -36,7 +76,7 @@ const authUser = async (req, res) => {
  * @desc Get user profile
  * @route GET /api/v1/users/profile
  * @access Private
- **/
+ */
 
 const getUserProfile = async (req, res) => {
   const { _id } = req.user
@@ -62,4 +102,4 @@ const getUserProfile = async (req, res) => {
   }
 }
 
-export { authUser, getUserProfile }
+export { registerUser, authUser, getUserProfile }
