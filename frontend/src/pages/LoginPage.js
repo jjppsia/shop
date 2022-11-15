@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { login } from '../actions/userActions'
 import { FormContainer, Loader, Message } from '../components'
 
@@ -9,21 +9,17 @@ const LoginPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const [searchParams] = useSearchParams()
   const navigate = useNavigate()
-
   const dispatch = useDispatch()
   const useLogin = useSelector((state) => state.userLogin)
 
   const { loading, error, userInfo } = useLogin
 
-  const redirect = searchParams.get('redirect') || '/'
-
   useEffect(() => {
     if (userInfo) {
-      navigate(redirect)
+      navigate('/')
     }
-  }, [navigate, userInfo, redirect])
+  }, [navigate, userInfo])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -60,10 +56,7 @@ const LoginPage = () => {
       </Form>
       <Row className='py-3'>
         <Col>
-          New customer?{' '}
-          <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
-            Register
-          </Link>
+          New customer? <Link to={'/register'}>Register</Link>
         </Col>
       </Row>
     </FormContainer>
