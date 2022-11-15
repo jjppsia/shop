@@ -5,7 +5,7 @@ import Product from '../models/productModel.js'
  * @desc    Fetch all products
  * @route   GET /api/v1/products
  * @access  Public
- **/
+ */
 const getProducts = async (req, res) => {
   try {
     const products = await Product.find({})
@@ -20,7 +20,7 @@ const getProducts = async (req, res) => {
  * @desc    Fetch single product
  * @route   GET /api/v1/products/:id
  * @access  Public
- **/
+ */
 const getProductById = async (req, res, next) => {
   const { id: _id } = req.params
 
