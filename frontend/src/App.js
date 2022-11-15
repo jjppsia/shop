@@ -2,7 +2,13 @@ import React from 'react'
 import { Container } from 'react-bootstrap'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { Footer, Header } from './components'
-import { CartPage, HomePage, LoginPage, ProductPage } from './pages'
+import {
+  CartPage,
+  HomePage,
+  LoginPage,
+  ProductPage,
+  RegisterPage,
+} from './pages'
 
 function App() {
   return (
@@ -13,6 +19,7 @@ function App() {
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/login' element={<LoginPage />} />
+            <Route path='/register' element={<RegisterPage />} />
             <Route path='/product/:id' element={<ProductPage />} />
             <Route path='/cart'>
               <Route index element={<CartPage />} />
