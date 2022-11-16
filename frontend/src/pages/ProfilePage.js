@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { getUserDetails } from '../actions/userActions'
+import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { Loader, Message } from '../components'
 
 const ProfilePage = () => {
@@ -14,11 +14,14 @@ const ProfilePage = () => {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
   const userDetails = useSelector((state) => state.userDetails)
   const userLogin = useSelector((state) => state.userLogin)
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
 
   const { loading, error, user } = userDetails
   const { userInfo } = userLogin
+  const { success } = userUpdateProfile
 
   useEffect(() => {
     if (!userInfo) {
@@ -40,6 +43,8 @@ const ProfilePage = () => {
       setMessage('Passwords do not match')
       return
     }
+
+    dispatch(updateUserProfile({ id: user._id, name, email, password }))
   }
 
   return (
@@ -48,6 +53,7 @@ const ProfilePage = () => {
         <h2>User Profile</h2>
         {message && <Message variant='danger'>{message}</Message>}
         {error && <Message variant='danger'>{error}</Message>}
+        {success && <Message variant='success'>Profile Updated</Message>}
         {loading && <Loader />}
         <Form onSubmit={submitHandler}>
           <Form.Group className='mb-3' controlId='name'>
