@@ -9,6 +9,8 @@ import {
   ProductPage,
   ProfilePage,
   RegisterPage,
+  ShippingPage,
+  PrivateRouteWrapper,
 } from './pages'
 
 function App() {
@@ -18,10 +20,13 @@ function App() {
       <main className='py-3'>
         <Container>
           <Routes>
+            <Route element={<PrivateRouteWrapper />}>
+              <Route path='/profile' element={<ProfilePage />} />
+              <Route path='/shipping' element={<ShippingPage />} />
+            </Route>
             <Route path='/' element={<HomePage />} />
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegisterPage />} />
-            <Route path='/profile' element={<ProfilePage />} />
             <Route path='/product/:id' element={<ProductPage />} />
             <Route path='/cart'>
               <Route index element={<CartPage />} />
