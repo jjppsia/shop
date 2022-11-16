@@ -7,6 +7,7 @@ import {
   HomePage,
   LoginPage,
   PaymentPage,
+  PlaceOrderPage,
   PrivateRouteWrapper,
   ProductPage,
   ProfilePage,
@@ -25,6 +26,7 @@ function App() {
               <Route path='/profile' element={<ProfilePage />} />
               <Route path='/shipping' element={<ShippingPage />} />
               <Route path='/payment' element={<PaymentPage />} />
+              <Route path='/placeorder' element={<PlaceOrderPage />} />
             </Route>
             <Route path='/' element={<HomePage />} />
             <Route path='/login' element={<LoginPage />} />
