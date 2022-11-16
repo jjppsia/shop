@@ -1,3 +1,4 @@
+export { default as CheckoutSteps } from './CheckoutSteps'
 export { default as Footer } from './Footer'
 export { default as FormContainer } from './FormContainer'
 export { default as Header } from './Header'

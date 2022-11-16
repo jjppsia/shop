@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { saveShippingAddress } from '../actions/cartActions'
-import { FormContainer } from '../components'
+import { CheckoutSteps, FormContainer } from '../components'
 
 function ShippingPage() {
   const cart = useSelector((state) => state.cart)
@@ -27,6 +27,7 @@ function ShippingPage() {
 
   return (
     <FormContainer>
+      <CheckoutSteps shipping />
       <h1>Shipping</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group className='mb-3' controlId='address'>
