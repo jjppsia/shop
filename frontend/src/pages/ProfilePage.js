@@ -61,7 +61,7 @@ const ProfilePage = () => {
             <Form.Control
               type='name'
               placeholder='Enter name'
-              value={name}
+              value={name || ''}
               onChange={(e) => setName(e.target.value)}
             ></Form.Control>
           </Form.Group>
@@ -70,7 +70,7 @@ const ProfilePage = () => {
             <Form.Control
               type='email'
               placeholder='Enter email'
-              value={email}
+              value={email || ''}
               onChange={(e) => setEmail(e.target.value)}
             ></Form.Control>
           </Form.Group>
