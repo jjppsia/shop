@@ -7,6 +7,7 @@ import {
   HomePage,
   LoginPage,
   ProductPage,
+  ProfilePage,
   RegisterPage,
 } from './pages'
 
@@ -20,6 +21,7 @@ function App() {
             <Route path='/' element={<HomePage />} />
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegisterPage />} />
+            <Route path='/profile' element={<ProfilePage />} />
             <Route path='/product/:id' element={<ProductPage />} />
             <Route path='/cart'>
               <Route index element={<CartPage />} />
