@@ -16,3 +16,13 @@ export const calculatePrices = (cart) => {
 
   return { itemsPrice, shippingPrice, taxPrice, totalPrice }
 }
+
+export const calculateOrderPrices = (order) => {
+  let { itemsPrice } = order
+
+  itemsPrice = addDecimals(
+    order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+  )
+
+  return { itemsPrice }
+}
