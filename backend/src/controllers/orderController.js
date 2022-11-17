@@ -37,7 +37,6 @@ const addOrderItems = async (req, res) => {
  * @route   GET /api/v1/orders
  * @access  Private
  */
-
 const getOrders = async (req, res) => {
   try {
     const orders = await Order.find({}).populate('user', 'id name')
@@ -53,12 +52,11 @@ const getOrders = async (req, res) => {
  * @route   GET /api/v1/orders/:id
  * @access  Private
  */
-
 const getOrderById = async (req, res) => {
   const { id } = req.params
 
   try {
-    const order = await Order.findById(id).populate('user', 'name email')
+    const order = await Order.findById({ id }).populate('user', 'name email')
 
     if (!order) {
       res.status(StatusCodes.NOT_FOUND)
@@ -71,4 +69,41 @@ const getOrderById = async (req, res) => {
   }
 }
 
-export { addOrderItems, getOrders, getOrderById }
+/**
+ * @desc    Update order to paid
+ * @route   PATCH /api/v1/orders/:id/pay
+ * @access  Private
+ */
+const updateOrderToPaid = async (req, res) => {
+  const { id: _id } = req.params
+  const { id, status, update_time, email_address } = req.body
+
+  try {
+    const order = await Order.findById({ _id })
+
+    if (!order) {
+      res.status(StatusCodes.NOT_FOUND)
+      throw new Error('Order not found')
+    }
+
+    const updatedOrder = await Order.updateOne(
+      { _id: id },
+      {
+        isPaid: true,
+        paidAt: Date.now(),
+        paymentResult: {
+          id,
+          status,
+          update_time,
+          email_address
+        }
+      }
+    )
+
+    res.status(StatusCodes.OK).json(updatedOrder)
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+  }
+}
+
+export { addOrderItems, getOrders, getOrderById, updateOrderToPaid }

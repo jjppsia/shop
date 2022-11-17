@@ -77,7 +77,7 @@ const getUserProfile = async (req, res) => {
   const { _id } = req.user
 
   try {
-    const user = await User.findById(_id)
+    const user = await User.findById({ _id })
 
     if (!user) {
       res.status(StatusCodes.NOT_FOUND)
