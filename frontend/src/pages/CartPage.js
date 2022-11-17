@@ -42,13 +42,13 @@ function CartPage() {
         ) : (
           <ListGroup variant='flush'>
             {cartItems.map((item) => (
-              <ListGroup.Item key={item.id}>
+              <ListGroup.Item key={item.product}>
                 <Row>
                   <Col md={2}>
                     <Image src={item.image} alt={item.name} fluid rounded />
                   </Col>
                   <Col md={3}>
-                    <Link to={`/product/${item.id}`}>{item.name}</Link>
+                    <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </Col>
                   <Col md={2}>
                     <p>${item.price}</p>
@@ -57,7 +57,9 @@ function CartPage() {
                     <Form.Select
                       value={item.qty}
                       onChange={(e) =>
-                        dispatch(addToCart(item.id, Number(e.target.value)))
+                        dispatch(
+                          addToCart(item.product, Number(e.target.value))
+                        )
                       }
                     >
                       {[...Array(item.countInStock).keys()].map((x) => (
@@ -71,7 +73,7 @@ function CartPage() {
                     <Button
                       type='button'
                       variant='light'
-                      onClick={() => handleRemoveFromCart(item.id)}
+                      onClick={() => handleRemoveFromCart(item.product)}
                     >
                       <i className='fas fa-trash' />
                     </Button>

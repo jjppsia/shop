@@ -1,18 +1,41 @@
-import React, { useState } from 'react'
-import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
+import React, { useEffect } from 'react'
+import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { createOrder } from '../actions/orderActions'
 import { CheckoutSteps, Message } from '../components'
 import { calculatePrices } from '../utils/calculatePrices'
 
-function PlaceOrderPage() {
+const PlaceOrderScreen = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
   const cart = useSelector((state) => state.cart)
+  const orderCreate = useSelector((state) => state.orderCreate)
 
   const { itemsPrice, shippingPrice, taxPrice, totalPrice } =
     calculatePrices(cart)
 
+  const { order, success, error } = orderCreate
+
+  useEffect(() => {
+    if (success) {
+      navigate(`/order/${order._id}`)
+    }
+  }, [navigate, order?._id, success])
+
   const handlePlaceOrder = () => {
-    console.log('place order')
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        itemsPrice,
+        shippingPrice,
+        taxPrice,
+        totalPrice,
+      })
+    )
   }
 
   return (
@@ -98,6 +121,9 @@ function PlaceOrderPage() {
                   <Col>${totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
+              <ListGroup.Item>
+                {error && <Message variant='danger'>{error}</Message>}
+              </ListGroup.Item>
               <ListGroup.Item className='d-grid gap-2'>
                 <Button
                   type='button'
@@ -115,4 +141,4 @@ function PlaceOrderPage() {
   )
 }
 
-export default PlaceOrderPage
+export default PlaceOrderScreen
