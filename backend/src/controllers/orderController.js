@@ -7,15 +7,7 @@ import Order from '../models/orderModel.js'
  * @access  Private
  */
 const addOrderItems = async (req, res) => {
-  const {
-    orderItems,
-    shippingAddress,
-    paymentMethod,
-    itemsPrice,
-    taxPrice,
-    shippingPrice,
-    totalPrice,
-  } = req.body
+  const { orderItems, shippingAddress, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice } = req.body
 
   try {
     if (orderItems && orderItems.length === 0) {
@@ -31,14 +23,12 @@ const addOrderItems = async (req, res) => {
       itemsPrice,
       taxPrice,
       shippingPrice,
-      totalPrice,
+      totalPrice
     })
 
     res.status(StatusCodes.CREATED).json(order)
   } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
   }
 }
 
@@ -54,9 +44,7 @@ const getOrders = async (req, res) => {
 
     res.json(orders)
   } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
   }
 }
 
@@ -79,9 +67,7 @@ const getOrderById = async (req, res) => {
 
     res.json(order)
   } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
   }
 }
 

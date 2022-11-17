@@ -1,0 +1,13 @@
+node_modules
+build
+
+*.json
+.env
+*.md
+
+.eslintignore
+.eslintrc.js
+
+.gitignore
+.prettierignore
+.prettierrc

@@ -10,7 +10,7 @@ function Loader() {
         width: '50px',
         height: '50px',
         margin: 'auto',
-        display: 'block',
+        display: 'block'
       }}
     >
       <span className='sr-only'>Loading...</span>

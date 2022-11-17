@@ -25,13 +25,7 @@ const start = async () => {
   try {
     await connectDB()
 
-    app.listen(PORT, () =>
-      console.log(
-        `🚀 ${chalk.cyanBright(
-          `Server running in ${NODE_ENV} on port:`
-        )} ${PORT}`
-      )
-    )
+    app.listen(PORT, () => console.log(`🚀 ${chalk.cyanBright(`Server running in ${NODE_ENV} on port:`)} ${PORT}`))
   } catch (error) {
     console.error(error)
     process.exit(1)

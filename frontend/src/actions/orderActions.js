@@ -5,7 +5,7 @@ import {
   ORDER_CREATE_SUCCESS,
   ORDER_DETAILS_FAIL,
   ORDER_DETAILS_REQUEST,
-  ORDER_DETAILS_SUCCESS,
+  ORDER_DETAILS_SUCCESS
 } from '../constants/orderConstants'
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -13,7 +13,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
     dispatch({ type: ORDER_CREATE_REQUEST })
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userInfo }
     } = getState()
 
     const config = { headers: { Authorization: `Bearer ${userInfo.token}` } }
@@ -24,10 +24,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_CREATE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message
     })
   }
 }
@@ -37,7 +34,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
     dispatch({ type: ORDER_DETAILS_REQUEST })
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userInfo }
     } = getState()
 
     const config = { headers: { Authorization: `Bearer ${userInfo.token}` } }
@@ -48,10 +45,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_DETAILS_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message
     })
   }
 }

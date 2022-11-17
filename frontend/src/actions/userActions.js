@@ -12,7 +12,7 @@ import {
   USER_REGISTER_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_REQUEST,
-  USER_UPDATE_PROFILE_SUCCESS,
+  USER_UPDATE_PROFILE_SUCCESS
 } from '../constants/userConstants'
 
 export const login = (email, password) => async (dispatch) => {
@@ -21,7 +21,7 @@ export const login = (email, password) => async (dispatch) => {
 
     const { data } = await axios.post('/api/v1/users/login', {
       email,
-      password,
+      password
     })
 
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
@@ -30,10 +30,7 @@ export const login = (email, password) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message
     })
   }
 }
@@ -50,7 +47,7 @@ export const register = (name, email, password) => async (dispatch) => {
     const { data } = await axios.post('/api/v1/users', {
       name,
       email,
-      password,
+      password
     })
 
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data })
@@ -60,10 +57,7 @@ export const register = (name, email, password) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message
     })
   }
 }
@@ -73,7 +67,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     dispatch({ type: USER_DETAILS_REQUEST })
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userInfo }
     } = getState()
 
     const config = { headers: { Authorization: `Bearer ${userInfo.token}` } }
@@ -84,10 +78,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_DETAILS_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message
     })
   }
 }
@@ -97,7 +88,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     dispatch({ type: USER_UPDATE_PROFILE_REQUEST })
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userInfo }
     } = getState()
 
     const config = { headers: { Authorization: `Bearer ${userInfo.token}` } }
@@ -108,10 +99,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_UPDATE_PROFILE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message
     })
   }
 }

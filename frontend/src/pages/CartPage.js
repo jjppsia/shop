@@ -56,11 +56,7 @@ function CartPage() {
                   <Col md={2}>
                     <Form.Select
                       value={item.qty}
-                      onChange={(e) =>
-                        dispatch(
-                          addToCart(item.product, Number(e.target.value))
-                        )
-                      }
+                      onChange={(e) => dispatch(addToCart(item.product, Number(e.target.value)))}
                     >
                       {[...Array(item.countInStock).keys()].map((x) => (
                         <option key={x + 1} value={x + 1}>
@@ -70,11 +66,7 @@ function CartPage() {
                     </Form.Select>
                   </Col>
                   <Col md={2}>
-                    <Button
-                      type='button'
-                      variant='light'
-                      onClick={() => handleRemoveFromCart(item.product)}
-                    >
+                    <Button type='button' variant='light' onClick={() => handleRemoveFromCart(item.product)}>
                       <i className='fas fa-trash' />
                     </Button>
                   </Col>
@@ -88,21 +80,11 @@ function CartPage() {
         <Card>
           <ListGroup variant='flush'>
             <ListGroup.Item>
-              <h2>
-                Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
-                items
-              </h2>
-              $
-              {cartItems
-                .reduce((acc, item) => acc + item.qty * item.price, 0)
-                .toFixed(2)}
+              <h2>Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)}) items</h2>$
+              {cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
             </ListGroup.Item>
             <ListGroup.Item className='d-grid gap-2'>
-              <Button
-                type='button'
-                disabled={cartItems.length === 0}
-                onClick={handleCheckout}
-              >
+              <Button type='button' disabled={cartItems.length === 0} onClick={handleCheckout}>
                 Proceed To Checkout
               </Button>
             </ListGroup.Item>

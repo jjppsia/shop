@@ -13,7 +13,7 @@ import {
   ProductPage,
   ProfilePage,
   RegisterPage,
-  ShippingPage,
+  ShippingPage
 } from './pages'
 
 function App() {

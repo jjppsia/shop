@@ -1,9 +1,5 @@
 import express from 'express'
-import {
-  addOrderItems,
-  getOrderById,
-  getOrders,
-} from '../controllers/orderController.js'
+import { addOrderItems, getOrderById, getOrders } from '../controllers/orderController.js'
 
 const router = express.Router()
 

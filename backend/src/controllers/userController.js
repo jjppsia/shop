@@ -21,7 +21,7 @@ const registerUser = async (req, res) => {
     const newUser = await User.create({
       name,
       email,
-      password,
+      password
     })
 
     if (!newUser) {
@@ -33,12 +33,10 @@ const registerUser = async (req, res) => {
       _id: newUser._id,
       name: newUser.name,
       email: newUser.email,
-      isAdmin: newUser.isAdmin,
+      isAdmin: newUser.isAdmin
     })
   } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
   }
 }
 
@@ -63,12 +61,10 @@ const authUser = async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: generateToken(user._id),
+      token: generateToken(user._id)
     })
   } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
   }
 }
 
@@ -92,12 +88,10 @@ const getUserProfile = async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin,
+      isAdmin: user.isAdmin
     })
   } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
   }
 }
 
@@ -129,12 +123,10 @@ const updateUserProfile = async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
-      token: generateToken(updatedUser._id),
+      token: generateToken(updatedUser._id)
     })
   } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
   }
 }
 

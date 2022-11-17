@@ -6,14 +6,10 @@ const connectDB = async () => {
     await mongoose
       .connect(process.env.MONGO_URI, {
         useNewUrlParser: true,
-        useUnifiedTopology: true,
+        useUnifiedTopology: true
       })
       .then((conn) => {
-        console.log(
-          `✔️  ${chalk.greenBright('Connected to MongoDB:')} ${
-            conn.connection.host
-          }`
-        )
+        console.log(`✔️  ${chalk.greenBright('Connected to MongoDB:')} ${conn.connection.host}`)
       })
   } catch (error) {
     console.log(error)

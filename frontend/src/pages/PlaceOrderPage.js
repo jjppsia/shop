@@ -13,8 +13,7 @@ const PlageOrderPage = () => {
   const cart = useSelector((state) => state.cart)
   const orderCreate = useSelector((state) => state.orderCreate)
 
-  const { itemsPrice, shippingPrice, taxPrice, totalPrice } =
-    calculatePrices(cart)
+  const { itemsPrice, shippingPrice, taxPrice, totalPrice } = calculatePrices(cart)
 
   const { order, success, error } = orderCreate
 
@@ -33,7 +32,7 @@ const PlageOrderPage = () => {
         itemsPrice,
         shippingPrice,
         taxPrice,
-        totalPrice,
+        totalPrice
       })
     )
   }
@@ -48,8 +47,7 @@ const PlageOrderPage = () => {
               <h2>Shipping</h2>
               <p>
                 <strong>Address:</strong>
-                {cart.shippingAddress.address}, {cart.shippingAddress.city}{' '}
-                {cart.shippingAddress.postalCode},{' '}
+                {cart.shippingAddress.address}, {cart.shippingAddress.city} {cart.shippingAddress.postalCode},{' '}
                 {cart.shippingAddress.country}
               </p>
             </ListGroup.Item>
@@ -68,17 +66,10 @@ const PlageOrderPage = () => {
                     <ListGroup.Item key={index}>
                       <Row>
                         <Col md={1}>
-                          <Image
-                            src={item.image}
-                            alt={item.name}
-                            fluid
-                            rounded
-                          />
+                          <Image src={item.image} alt={item.name} fluid rounded />
                         </Col>
                         <Col>
-                          <Link to={`/product/${item.product}`}>
-                            {item.name}
-                          </Link>
+                          <Link to={`/product/${item.product}`}>{item.name}</Link>
                         </Col>
                         <Col md={4}>
                           {item.qty} x ${item.price} = ${item.qty * item.price}
@@ -121,15 +112,9 @@ const PlageOrderPage = () => {
                   <Col>${totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item>
-                {error && <Message variant='danger'>{error}</Message>}
-              </ListGroup.Item>
+              <ListGroup.Item>{error && <Message variant='danger'>{error}</Message>}</ListGroup.Item>
               <ListGroup.Item className='d-grid gap-2'>
-                <Button
-                  type='button'
-                  disabled={cart.cartItems === 0}
-                  onClick={handlePlaceOrder}
-                >
+                <Button type='button' disabled={cart.cartItems === 0} onClick={handlePlaceOrder}>
                   Place Order
                 </Button>
               </ListGroup.Item>

@@ -7,6 +7,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
+    "pretty": "prettier --write .",
     "data:import": "node src/seeder",
     "data:destroy": "node src/seeder -d"
   },
