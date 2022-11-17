@@ -1,5 +1,5 @@
-import 'dotenv/config'
 import chalk from 'chalk'
+import 'dotenv/config'
 import connectDB from './config/db.js'
 import products from './data/products.js'
 import users from './data/users.js'

@@ -1,13 +1,13 @@
-import 'dotenv/config'
 import chalk from 'chalk'
+import 'dotenv/config'
 import express from 'express'
 import logger from 'morgan'
 
 import connectDB from './config/db.js'
+import { auth } from './middlewares/auth.js'
+import orderRoutes from './routes/orderRoutes.js'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
-import orderRoutes from './routes/orderRoutes.js'
-import { auth } from './middlewares/auth.js'
 
 const NODE_ENV = process.env.NODE_ENV || 'development'
 const PORT = process.env.PORT || 5000

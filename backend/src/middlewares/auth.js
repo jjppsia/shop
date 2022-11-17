@@ -1,6 +1,6 @@
+import { StatusCodes } from 'http-status-codes'
 import jwt from 'jsonwebtoken'
 import User from '../models/userModel.js'
-import { StatusCodes } from 'http-status-codes'
 
 const auth = async (req, res, next) => {
   const { authorization } = req.headers
