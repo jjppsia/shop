@@ -69,6 +69,20 @@ const authUser = async (req, res) => {
 }
 
 /**
+ * @desc Get all users
+ * @route GET /api/v1/users
+ * @access Private/Admin
+ */
+const getUsers = async (req, res) => {
+  try {
+    const users = await User.find({})
+    res.json(users)
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+  }
+}
+
+/**
  * @desc Get user profile
  * @route GET /api/v1/users/profile
  * @access Private
@@ -130,4 +144,4 @@ const updateUserProfile = async (req, res) => {
   }
 }
 
-export { registerUser, authUser, getUserProfile, updateUserProfile }
+export { registerUser, authUser, getUsers, getUserProfile, updateUserProfile }
