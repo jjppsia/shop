@@ -9,6 +9,5 @@
   "quoteProps": "consistent",
   "singleQuote": true,
   "tabWidth": 2,
-  "trailingComma": "none",
-  "organizeImportsSkipDestructiveCodeActions": true
+  "trailingComma": "none"
 }
