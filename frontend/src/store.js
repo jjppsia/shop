@@ -5,8 +5,8 @@ import { cartReducer } from './reducers/cartReducers'
 import {
   orderCreateReducer,
   orderDetailsReducer,
-  orderPayReducer,
-  orderListOfUserReducer
+  orderListOfUserReducer,
+  orderPayReducer
 } from './reducers/orderReducers'
 import { productDetailsReducer, productListReducer } from './reducers/productReducers'
 import {

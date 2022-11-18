@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, Row, Table } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+import { LinkContainer } from 'react-router-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import { listUserOrders } from '../actions/orderActions'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { Loader, Message } from '../components'
-import { listUserOrders } from '../actions/orderActions'
 
 const ProfilePage = () => {
   const [name, setName] = useState('')
