@@ -53,10 +53,10 @@ const getOrders = async (req, res) => {
  * @access  Private
  */
 const getOrderById = async (req, res) => {
-  const { id } = req.params
+  const { id: _id } = req.params
 
   try {
-    const order = await Order.findById({ id }).populate('user', 'name email')
+    const order = await Order.findById({ _id }).populate('user', 'name email')
 
     if (!order) {
       res.status(StatusCodes.NOT_FOUND)
@@ -76,7 +76,7 @@ const getOrderById = async (req, res) => {
  */
 const updateOrderToPaid = async (req, res) => {
   const { id: _id } = req.params
-  const { id, status, update_time, email_address } = req.body
+  const { id, status, update_time, payer } = req.body
 
   try {
     const order = await Order.findById({ _id })
@@ -87,7 +87,7 @@ const updateOrderToPaid = async (req, res) => {
     }
 
     const updatedOrder = await Order.updateOne(
-      { _id: id },
+      { _id },
       {
         isPaid: true,
         paidAt: Date.now(),
@@ -95,7 +95,10 @@ const updateOrderToPaid = async (req, res) => {
           id,
           status,
           update_time,
-          email_address
+          payer: {
+            name: `${payer.name.given_name} ${payer.name.surname}`,
+            email: payer.email_address
+          }
         }
       }
     )

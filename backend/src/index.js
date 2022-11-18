@@ -11,6 +11,7 @@ import userRoutes from './routes/userRoutes.js'
 
 const NODE_ENV = process.env.NODE_ENV || 'development'
 const PORT = process.env.PORT || 5000
+const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID
 
 const app = express()
 
@@ -20,6 +21,8 @@ app.use(express.json())
 app.use('/api/v1/products', productRoutes)
 app.use('/api/v1/users', userRoutes)
 app.use('/api/v1/orders', auth, orderRoutes)
+
+app.get('/api/v1/config/paypal', (req, res) => res.send(PAYPAL_CLIENT_ID))
 
 const start = async () => {
   try {

@@ -19,9 +19,10 @@ const ProfilePage = () => {
   const userLogin = useSelector((state) => state.userLogin)
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
 
-  const { loading, error, user } = userDetails
+  const { error: userDetailsError, loading, user } = userDetails
   const { userInfo } = userLogin
-  const { success } = userUpdateProfile
+
+  const { error: updateProfileError, success } = userUpdateProfile
 
   useEffect(() => {
     if (!userInfo) {
@@ -52,7 +53,8 @@ const ProfilePage = () => {
       <Col md={3}>
         <h2>User Profile</h2>
         {message && <Message variant='danger'>{message}</Message>}
-        {error && <Message variant='danger'>{error}</Message>}
+        {userDetailsError && <Message variant='danger'>{userDetailsError}</Message>}
+        {updateProfileError && <Message variant='danger'>{updateProfileError}</Message>}
         {success && <Message variant='success'>Profile Updated</Message>}
         {loading && <Loader />}
         <Form onSubmit={submitHandler}>
