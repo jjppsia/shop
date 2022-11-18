@@ -13,7 +13,8 @@ import {
   ProductPage,
   ProfilePage,
   RegisterPage,
-  ShippingPage
+  ShippingPage,
+  UserListPage
 } from './pages'
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Container>
           <Routes>
             <Route element={<PrivateRouteWrapper />}>
+              <Route path='/admin/userlist' element={<UserListPage />} />
               <Route path='/profile' element={<ProfilePage />} />
               <Route path='/shipping' element={<ShippingPage />} />
               <Route path='/payment' element={<PaymentPage />} />
