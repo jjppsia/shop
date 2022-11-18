@@ -109,4 +109,26 @@ const updateOrderToPaid = async (req, res) => {
   }
 }
 
-export { addOrderItems, getOrders, getOrderById, updateOrderToPaid }
+/**
+ * @desc    Update order to delivered
+ * @route   GET /api/v1/orders/myorders
+ * @access  Private
+ */
+const getUserOrders = async (req, res) => {
+  const { _id } = req.user
+
+  try {
+    const orders = await Order.find({ user: _id })
+
+    if (!orders) {
+      res.status(StatusCodes.NOT_FOUND)
+      throw new Error('Order not found')
+    }
+
+    res.json(orders)
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+  }
+}
+
+export { addOrderItems, getOrders, getOrderById, updateOrderToPaid, getUserOrders }
