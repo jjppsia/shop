@@ -15,9 +15,7 @@ function UserListPage() {
     dispatch(listUsers())
   }, [dispatch])
 
-  const handleDelete = (id) => {
-    console.log('delete')
-  }
+  const handleDelete = (id) => {}
 
   return (
     <>

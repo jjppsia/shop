@@ -24,8 +24,6 @@ const auth = async (req, res, next) => {
 const adminAuth = (req, res, next) => {
   const { isAdmin } = req.user
 
-  console.log(req.user)
-
   try {
     if (!isAdmin) {
       throw new Error('Not authorized as an admin')

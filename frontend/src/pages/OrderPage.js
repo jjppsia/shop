@@ -54,7 +54,6 @@ const OrderPage = () => {
   }, [dispatch, orderId, order, successOrderPay])
 
   const handleSuccessPayment = (paymentResult) => {
-    console.log(paymentResult)
     dispatch(payOrder(orderId, paymentResult))
   }
 
