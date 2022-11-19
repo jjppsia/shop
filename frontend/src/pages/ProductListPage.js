@@ -3,21 +3,24 @@ import { Button, Row, Col, Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
-import { listProducts } from '../actions/productActions'
+import { listProducts, deleteProduct } from '../actions/productActions'
 import { Loader, Message } from '../components'
 
 function ProductListPage() {
   const dispatch = useDispatch()
   const productList = useSelector((state) => state.productList)
+  const productDelete = useSelector((state) => state.productDelete)
 
-  const { loading, error, products } = productList
+  const { loading: loadingList, error: errorList, products } = productList
+  const { loading: loadingDelete, error: errorDelete, success: successDelete } = productDelete
 
   useEffect(() => {
     dispatch(listProducts())
-  }, [dispatch])
+  }, [dispatch, successDelete])
 
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
+      dispatch(deleteProduct(id))
     }
   }
 
@@ -35,10 +38,12 @@ function ProductListPage() {
           </Button>
         </Col>
       </Row>
-      {loading ? (
+      {loadingDelete && <Loader />}
+      {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
+      {loadingList ? (
         <Loader />
-      ) : error ? (
-        <Message variant='danger'>{error}</Message>
+      ) : errorList ? (
+        <Message variant='danger'>{errorList}</Message>
       ) : (
         <Table striped bordered hover responsive className='table-sm'>
           <thead>

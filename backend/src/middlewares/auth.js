@@ -2,7 +2,7 @@ import { StatusCodes } from 'http-status-codes'
 import jwt from 'jsonwebtoken'
 import User from '../models/userModel.js'
 
-const auth = async (req, res, next) => {
+const verifyToken = async (req, res, next) => {
   const { authorization } = req.headers
 
   try {
@@ -35,4 +35,4 @@ const adminAuth = (req, res, next) => {
   }
 }
 
-export { auth, adminAuth }
+export { verifyToken, adminAuth }

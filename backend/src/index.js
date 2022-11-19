@@ -4,7 +4,7 @@ import express from 'express'
 import logger from 'morgan'
 
 import connectDB from './config/db.js'
-import { auth } from './middlewares/auth.js'
+import { verifyToken } from './middlewares/auth.js'
 import orderRoutes from './routes/orderRoutes.js'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
@@ -20,7 +20,7 @@ app.use(express.json())
 
 app.use('/api/v1/products', productRoutes)
 app.use('/api/v1/users', userRoutes)
-app.use('/api/v1/orders', auth, orderRoutes)
+app.use('/api/v1/orders', verifyToken, orderRoutes)
 
 app.get('/api/v1/config/paypal', (req, res) => res.send(PAYPAL_CLIENT_ID))
 

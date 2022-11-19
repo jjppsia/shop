@@ -9,18 +9,18 @@ import {
   updateUser,
   updateUserProfile
 } from '../controllers/userController.js'
-import { adminAuth, auth } from '../middlewares/auth.js'
+import { adminAuth, verifyToken } from '../middlewares/auth.js'
 
 const router = express.Router()
 
 router.route('/').post(registerUser)
 router.route('/login').post(authUser)
-router.route('/').get(auth, adminAuth, getUsers)
-router.route('/profile').get(auth, getUserProfile).patch(auth, updateUserProfile)
+router.route('/').get(verifyToken, adminAuth, getUsers)
+router.route('/profile').get(verifyToken, getUserProfile).patch(verifyToken, updateUserProfile)
 router
   .route('/:id')
-  .get(auth, adminAuth, getUserById)
-  .patch(auth, adminAuth, updateUser)
-  .delete(auth, adminAuth, deleteUser)
+  .get(verifyToken, adminAuth, getUserById)
+  .patch(verifyToken, adminAuth, updateUser)
+  .delete(verifyToken, adminAuth, deleteUser)
 
 export default router

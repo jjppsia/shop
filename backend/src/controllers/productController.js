@@ -33,4 +33,29 @@ const getProductById = async (req, res, next) => {
   }
 }
 
-export { getProducts, getProductById }
+/**
+ * @desc    Delete a product
+ * @route   DELETE /api/v1/products/:id
+ * @access  Private/Admin
+ */
+
+const deleteProduct = async (req, res, next) => {
+  const { id: _id } = req.params
+
+  try {
+    const product = await Product.findById({ _id })
+
+    if (!product) {
+      res.status(StatusCodes.NOT_FOUND)
+      throw new Error('User not found')
+    }
+
+    await Product.deleteOne({ _id })
+
+    res.status(StatusCodes.OK).json({ message: 'Product deleted' })
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message })
+  }
+}
+
+export { getProducts, getProductById, deleteProduct }
