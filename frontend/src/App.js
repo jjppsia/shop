@@ -1,15 +1,18 @@
 import React from 'react'
 import { Container } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { Footer, Header } from './components'
 import {
+  AdminPrivateRoute,
   CartPage,
+  EditUserPage,
   HomePage,
   LoginPage,
   OrderPage,
   PaymentPage,
   PlaceOrderPage,
-  PrivateRouteWrapper,
+  PrivateRoute,
   ProductPage,
   ProfilePage,
   RegisterPage,
@@ -24,8 +27,11 @@ function App() {
       <main className='py-3'>
         <Container>
           <Routes>
-            <Route element={<PrivateRouteWrapper />}>
-              <Route path='/admin/userlist' element={<UserListPage />} />
+            <Route element={<PrivateRoute />}>
+              <Route element={<AdminPrivateRoute />}>
+                <Route path='/admin/userlist' element={<UserListPage />} />
+                <Route path='/admin/user/:id/edit' element={<EditUserPage />} />
+              </Route>
               <Route path='/profile' element={<ProfilePage />} />
               <Route path='/shipping' element={<ShippingPage />} />
               <Route path='/payment' element={<PaymentPage />} />
