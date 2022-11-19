@@ -2,20 +2,26 @@ import React, { useEffect } from 'react'
 import { Button, Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
-import { listUsers } from '../actions/userActions'
+import { deleteUser, listUsers } from '../actions/userActions'
 import { Loader, Message } from '../components'
 
 function UserListPage() {
   const dispatch = useDispatch()
   const userList = useSelector((state) => state.userList)
+  const userDelete = useSelector((state) => state.userDelete)
 
   const { loading, error, users } = userList
+  const { success: successDelete } = userDelete
 
   useEffect(() => {
     dispatch(listUsers())
-  }, [dispatch])
+  }, [dispatch, successDelete])
 
-  const handleDelete = (id) => {}
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure you want to delete this user?')) {
+      dispatch(deleteUser(id))
+    }
+  }
 
   return (
     <>

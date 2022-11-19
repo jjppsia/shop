@@ -69,9 +69,9 @@ const authUser = async (req, res) => {
 }
 
 /**
- * @desc Get all users
- * @route GET /api/v1/users
- * @access Private/Admin
+ * @desc    Get all users
+ * @route   GET /api/v1/users
+ * @access  Private/Admin
  */
 const getUsers = async (req, res) => {
   try {
@@ -83,9 +83,9 @@ const getUsers = async (req, res) => {
 }
 
 /**
- * @desc Get user profile
- * @route GET /api/v1/users/profile
- * @access Private
+ * @desc    Get user profile
+ * @route   GET /api/v1/users/profile
+ * @access  Private
  */
 const getUserProfile = async (req, res) => {
   const { _id } = req.user
@@ -110,9 +110,9 @@ const getUserProfile = async (req, res) => {
 }
 
 /**
- * @desc Update user profile
- * @route GET /api/v1/users/profile
- * @access Private
+ * @desc    Update user profile
+ * @route   GET /api/v1/users/profile
+ * @access  Private
  */
 const updateUserProfile = async (req, res) => {
   const { _id } = req.user
@@ -144,4 +144,28 @@ const updateUserProfile = async (req, res) => {
   }
 }
 
-export { registerUser, authUser, getUsers, getUserProfile, updateUserProfile }
+/**
+ * @desc    Delete a user
+ * @route   DELETE /api/v1/users/:id
+ * @access  Private/Admin
+ */
+const deleteUser = async (req, res) => {
+  const { id } = req.params
+
+  try {
+    const user = await User.findById(id)
+
+    if (!user) {
+      res.status(StatusCodes.NOT_FOUND)
+      throw new Error('User not found')
+    }
+
+    await user.remove()
+
+    res.json({ message: 'User removed' })
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+  }
+}
+
+export { registerUser, authUser, getUsers, getUserProfile, updateUserProfile, deleteUser }
