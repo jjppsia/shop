@@ -3,7 +3,7 @@ import User from '../models/userModel.js'
 import generateToken from '../utils/generateToken.js'
 
 /**
- * @desc    Register a new user
+ * @desc    Register a user
  * @route   POST /api/v1/users
  * @access  Public
  */
@@ -56,7 +56,7 @@ const authUser = async (req, res) => {
       throw new Error('Invalid email or password')
     }
 
-    res.json({
+    res.status(StatusCodes.OK).json({
       _id: user._id,
       name: user.name,
       email: user.email,
@@ -76,7 +76,31 @@ const authUser = async (req, res) => {
 const getUsers = async (req, res) => {
   try {
     const users = await User.find({})
-    res.json(users)
+
+    res.status(StatusCodes.OK).json(users)
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+  }
+}
+
+/**
+ * @desc    Get user by ID
+ * @route   GET /api/v1/users/:id
+ * @access  Private/Admin
+ */
+
+const getUserById = async (req, res) => {
+  const { id: _id } = req.params
+
+  try {
+    const user = await User.findById({ _id }).select('-password')
+
+    if (!user) {
+      res.status(StatusCodes.NOT_FOUND)
+      throw new Error('User not found')
+    }
+
+    res.status(StatusCodes.OK).json(user)
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
   }
@@ -98,7 +122,7 @@ const getUserProfile = async (req, res) => {
       throw new Error('User not found')
     }
 
-    res.json({
+    res.status(StatusCodes.OK).json({
       _id: user._id,
       name: user.name,
       email: user.email,
@@ -110,8 +134,39 @@ const getUserProfile = async (req, res) => {
 }
 
 /**
+ * @desc    Update user
+ * @route   PATCH /api/v1/users/:id
+ * @access  Private/Admin
+ */
+
+const updateUser = async (req, res) => {
+  const { id: _id } = req.params
+  const { name, email, isAdmin } = req.body
+
+  try {
+    const user = await User.findById({ _id })
+
+    if (!user) {
+      res.status(StatusCodes.NOT_FOUND)
+      throw new Error('User not found')
+    }
+
+    const updatedUser = await User.findByIdAndUpdate({ _id }, { name, email, isAdmin }, { new: true })
+
+    res.status(StatusCodes.OK).json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin
+    })
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+  }
+}
+
+/**
  * @desc    Update user profile
- * @route   GET /api/v1/users/profile
+ * @route   PATCH /api/v1/users/profile
  * @access  Private
  */
 const updateUserProfile = async (req, res) => {
@@ -119,20 +174,16 @@ const updateUserProfile = async (req, res) => {
   const { name, email, password } = req.body
 
   try {
-    const user = await User.findOne({ _id })
+    const user = await User.findById({ _id })
 
     if (!user) {
       res.status(StatusCodes.NOT_FOUND)
       throw new Error('User not found')
     }
 
-    user.name = name || user.name
-    user.email = email || user.email
-    user.password = password || user.password
+    const updatedUser = await User.findByIdAndUpdate({ _id }, { name, email, password }, { new: true })
 
-    const updatedUser = await user.save()
-
-    res.json({
+    res.status(StatusCodes.OK).json({
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
@@ -150,22 +201,22 @@ const updateUserProfile = async (req, res) => {
  * @access  Private/Admin
  */
 const deleteUser = async (req, res) => {
-  const { id } = req.params
+  const { id: _id } = req.params
 
   try {
-    const user = await User.findById(id)
+    const user = await User.findById({ _id })
 
     if (!user) {
       res.status(StatusCodes.NOT_FOUND)
       throw new Error('User not found')
     }
 
-    await user.remove()
+    await User.deleteOne({ _id })
 
-    res.json({ message: 'User removed' })
+    res.status(StatusCodes.OK).json({ message: 'User removed' })
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
   }
 }
 
-export { registerUser, authUser, getUsers, getUserProfile, updateUserProfile, deleteUser }
+export { registerUser, authUser, getUsers, getUserById, getUserProfile, updateUser, updateUserProfile, deleteUser }

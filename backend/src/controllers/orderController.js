@@ -2,7 +2,7 @@ import { StatusCodes } from 'http-status-codes'
 import Order from '../models/orderModel.js'
 
 /**
- * @desc    Create new order
+ * @desc    Create an order
  * @route   GET /api/v1/orders
  * @access  Private
  */
@@ -41,7 +41,7 @@ const getOrders = async (req, res) => {
   try {
     const orders = await Order.find({}).populate('user', 'id name')
 
-    res.json(orders)
+    res.status(StatusCodes.OK).json(orders)
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
   }
@@ -63,7 +63,7 @@ const getOrderById = async (req, res) => {
       throw new Error('Order not found')
     }
 
-    res.json(order)
+    res.status(StatusCodes.OK).json(order)
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
   }
@@ -86,7 +86,7 @@ const updateOrderToPaid = async (req, res) => {
       throw new Error('Order not found')
     }
 
-    const updatedOrder = await Order.updateOne(
+    const updatedOrder = await Order.findByIdAndUpdate(
       { _id },
       {
         isPaid: true,
