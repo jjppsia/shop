@@ -1,6 +1,5 @@
 import React from 'react'
 import { Container } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { Footer, Header } from './components'
 import {
@@ -13,6 +12,7 @@ import {
   PaymentPage,
   PlaceOrderPage,
   PrivateRoute,
+  ProductListPage,
   ProductPage,
   ProfilePage,
   RegisterPage,
@@ -31,6 +31,7 @@ function App() {
               <Route element={<AdminPrivateRoute />}>
                 <Route path='/admin/userlist' element={<UserListPage />} />
                 <Route path='/admin/user/:id/edit' element={<EditUserPage />} />
+                <Route path='/admin/productlist' element={<ProductListPage />} />
               </Route>
               <Route path='/profile' element={<ProfilePage />} />
               <Route path='/shipping' element={<ShippingPage />} />
