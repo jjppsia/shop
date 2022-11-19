@@ -3,8 +3,9 @@ import { Button, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getUserDetails } from '../actions/userActions'
+import { getUserDetails, updateUser } from '../actions/userActions'
 import { FormContainer, Loader, Message } from '../components'
+import { USER_UPDATE_RESET } from '../constants/userConstants'
 
 const EditUserPage = () => {
   const [name, setName] = useState('')
@@ -15,11 +16,18 @@ const EditUserPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const userDetails = useSelector((state) => state.userDetails)
+  const userUpdate = useSelector((state) => state.userUpdate)
 
-  const { loading, error, user } = userDetails
+  const { loading: loadingDetails, error: errorDetails, user } = userDetails
+  const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = userUpdate
 
   useEffect(() => {
     const { _id, name, email, isAdmin } = user
+
+    if (successUpdate) {
+      dispatch({ type: USER_UPDATE_RESET })
+      navigate('/admin/userlist')
+    }
 
     if (!name || _id !== id) {
       dispatch(getUserDetails(id))
@@ -28,10 +36,11 @@ const EditUserPage = () => {
     setName(name)
     setEmail(email)
     setIsAdmin(isAdmin)
-  }, [dispatch, id, user])
+  }, [dispatch, id, navigate, successUpdate, user])
 
   const submitHandler = (e) => {
     e.preventDefault()
+    dispatch(updateUser({ id, name, email, isAdmin }))
   }
 
   return (
@@ -41,10 +50,12 @@ const EditUserPage = () => {
       </Link>
       <FormContainer>
         <h1>Edit User</h1>
-        {loading ? (
+        {loadingUpdate && <Loader />}
+        {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
+        {loadingDetails ? (
           <Loader />
-        ) : error ? (
-          <Message variant='danger'>{error}</Message>
+        ) : errorDetails ? (
+          <Message variant='danger'>{errorDetails}</Message>
         ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group className='mb-3' controlId='name'>
