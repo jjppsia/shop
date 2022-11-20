@@ -7,7 +7,7 @@ import { getUserDetails, updateUser } from '../actions/userActions'
 import { FormContainer, Loader, Message } from '../components'
 import { USER_UPDATE_RESET } from '../constants/userConstants'
 
-const EditUserPage = () => {
+function EditUserPage() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [isAdmin, setIsAdmin] = useState(false)
@@ -38,7 +38,7 @@ const EditUserPage = () => {
     setIsAdmin(isAdmin)
   }, [dispatch, id, navigate, successUpdate, user])
 
-  const submitHandler = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     dispatch(updateUser({ id, name, email, isAdmin }))
   }
@@ -57,7 +57,7 @@ const EditUserPage = () => {
         ) : errorDetails ? (
           <Message variant='danger'>{errorDetails}</Message>
         ) : (
-          <Form onSubmit={submitHandler}>
+          <Form onSubmit={handleSubmit}>
             <Form.Group className='mb-3' controlId='name'>
               <Form.Label>Name</Form.Label>
               <Form.Control

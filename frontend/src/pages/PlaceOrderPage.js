@@ -6,7 +6,7 @@ import { createOrder } from '../actions/orderActions'
 import { CheckoutSteps, Message } from '../components'
 import { calculatePrices } from '../utils/calculatePrices'
 
-const PlageOrderPage = () => {
+function PlaceOrderPage() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -126,4 +126,4 @@ const PlageOrderPage = () => {
   )
 }
 
-export default PlageOrderPage
+export default PlaceOrderPage

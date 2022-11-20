@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { register } from '../actions/userActions'
 import { FormContainer, Loader, Message } from '../components'
 
-const RegisterPage = () => {
+function RegisterPage() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -24,7 +24,7 @@ const RegisterPage = () => {
     }
   }, [navigate, userInfo])
 
-  const submitHandler = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
 
     if (password !== confirmPassword) {
@@ -41,7 +41,7 @@ const RegisterPage = () => {
       {message && <Message variant='danger'>{message}</Message>}
       {error && <Message variant='danger'>{error}</Message>}
       {loading && <Loader />}
-      <Form onSubmit={submitHandler}>
+      <Form onSubmit={handleSubmit}>
         <Form.Group className='mb-3' controlId='name'>
           <Form.Label>Name</Form.Label>
           <Form.Control

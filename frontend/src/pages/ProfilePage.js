@@ -41,7 +41,7 @@ const ProfilePage = () => {
     setEmail(user.email)
   }, [dispatch, navigate, userInfo, user])
 
-  const submitHandler = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
 
     if (password !== confirmPassword) {
@@ -61,7 +61,7 @@ const ProfilePage = () => {
         {updateProfileError && <Message variant='danger'>{updateProfileError}</Message>}
         {success && <Message variant='success'>Profile Updated</Message>}
         {loadingUserDetails && <Loader />}
-        <Form onSubmit={submitHandler}>
+        <Form onSubmit={handleSubmit}>
           <Form.Group className='mb-3' controlId='name'>
             <Form.Label>Name</Form.Label>
             <Form.Control

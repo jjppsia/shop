@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { login } from '../actions/userActions'
 import { FormContainer, Loader, Message } from '../components'
 
-const LoginPage = () => {
+function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -21,7 +21,7 @@ const LoginPage = () => {
     }
   }, [navigate, userInfo])
 
-  const submitHandler = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     dispatch(login(email, password))
   }
@@ -31,7 +31,7 @@ const LoginPage = () => {
       <h1>Sign In</h1>
       {error && <Message variant='danger'>{error}</Message>}
       {loading && <Loader />}
-      <Form onSubmit={submitHandler}>
+      <Form onSubmit={handleSubmit}>
         <Form.Group className='mb-3' controlId='email'>
           <Form.Label>Email Address</Form.Label>
           <Form.Control type='email' placeholder='Enter email' onChange={(e) => setEmail(e.target.value)} required />

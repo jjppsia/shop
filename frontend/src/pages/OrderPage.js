@@ -9,7 +9,7 @@ import { Loader, Message } from '../components'
 import { ORDER_PAY_RESET } from '../constants/orderConstants'
 import { calculateOrderPrices } from '../utils/calculatePrices'
 
-const OrderPage = () => {
+function OrderPage() {
   const [sdkReady, setSdkReady] = useState(false)
   const dispatch = useDispatch()
   const params = useParams()
