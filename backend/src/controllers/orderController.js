@@ -70,6 +70,28 @@ const getOrderById = async (req, res) => {
 }
 
 /**
+ * @desc    Update order to delivered
+ * @route   GET /api/v1/orders/myorders
+ * @access  Private
+ */
+const getUserOrders = async (req, res) => {
+  const { _id } = req.user
+
+  try {
+    const orders = await Order.find({ user: _id })
+
+    if (!orders) {
+      res.status(StatusCodes.NOT_FOUND)
+      throw new Error('Order not found')
+    }
+
+    res.json(orders)
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+  }
+}
+
+/**
  * @desc    Update order to paid
  * @route   PATCH /api/v1/orders/:id/pay
  * @access  Private
@@ -111,24 +133,26 @@ const updateOrderToPaid = async (req, res) => {
 
 /**
  * @desc    Update order to delivered
- * @route   GET /api/v1/orders/myorders
- * @access  Private
+ * @route   PATCH /api/v1/orders/:id/deliver
+ * @access  Private/Admin
  */
-const getUserOrders = async (req, res) => {
-  const { _id } = req.user
+const updateOrderToDelivered = async (req, res) => {
+  const { id: _id } = req.params
 
   try {
-    const orders = await Order.find({ user: _id })
+    const order = await Order.findById({ _id })
 
-    if (!orders) {
+    if (!order) {
       res.status(StatusCodes.NOT_FOUND)
       throw new Error('Order not found')
     }
 
-    res.json(orders)
+    const updatedOrder = await Order.findByIdAndUpdate({ _id }, { isDelivered: true, deliveredAt: Date.now() })
+
+    res.status(StatusCodes.OK).json(updatedOrder)
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
   }
 }
 
-export { addOrderItems, getOrders, getOrderById, updateOrderToPaid, getUserOrders }
+export { addOrderItems, getOrders, getOrderById, getUserOrders, updateOrderToPaid, updateOrderToDelivered }

@@ -1,12 +1,12 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Card, Col, Image, ListGroup, Row } from 'react-bootstrap'
+import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap'
 import { PayPalButton } from 'react-paypal-button-v2'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
-import { getOrderDetails, payOrder } from '../actions/orderActions'
+import { deliverOrder, getOrderDetails, payOrder } from '../actions/orderActions'
 import { Loader, Message } from '../components'
-import { ORDER_PAY_RESET } from '../constants/orderConstants'
+import { ORDER_DELIVER_RESET, ORDER_PAY_RESET } from '../constants/orderConstants'
 import { calculateOrderPrices } from '../utils/calculatePrices'
 
 function OrderPage() {
@@ -16,11 +16,15 @@ function OrderPage() {
 
   const orderId = params.id
 
+  const userLogin = useSelector((state) => state.userLogin)
   const orderDetails = useSelector((state) => state.orderDetails)
   const orderPay = useSelector((state) => state.orderPay)
+  const orderDeliver = useSelector((state) => state.orderDeliver)
 
+  const { userInfo } = userLogin
   const { loading: loadingOderDetails, error, order } = orderDetails
   const { loading: loadingOrderPay, success: successOrderPay } = orderPay
+  const { loading: loadingOrderDeliver, success: successOrderDeliver } = orderDeliver
 
   if (!loadingOderDetails) {
     order.itemsPrice = calculateOrderPrices(order).itemsPrice
@@ -39,8 +43,9 @@ function OrderPage() {
       document.body.appendChild(script)
     }
 
-    if (!order || successOrderPay) {
+    if (!order || successOrderPay || successOrderDeliver) {
       dispatch({ type: ORDER_PAY_RESET })
+      dispatch({ type: ORDER_DELIVER_RESET })
       dispatch(getOrderDetails(orderId))
     }
 
@@ -51,10 +56,14 @@ function OrderPage() {
 
       setSdkReady(true)
     }
-  }, [dispatch, orderId, order, successOrderPay])
+  }, [dispatch, orderId, order, successOrderPay, successOrderDeliver])
 
   const handleSuccessPayment = (paymentResult) => {
     dispatch(payOrder(orderId, paymentResult))
+  }
+
+  const handleDeliverOrder = () => {
+    dispatch(deliverOrder(order))
   }
 
   return loadingOderDetails ? (
@@ -160,6 +169,15 @@ function OrderPage() {
                 <ListGroup.Item>
                   {loadingOrderPay && <Loader />}
                   {!sdkReady ? <Loader /> : <PayPalButton amount={order.totalPrice} onSuccess={handleSuccessPayment} />}
+                </ListGroup.Item>
+              )}
+              {loadingOrderDeliver && <Loader />}
+              {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                <ListGroup.Item className='d-grid gap-2'>
+                  {loadingOrderDeliver && <Loader />}
+                  <Button type='button' className='btn btn-block' onClick={handleDeliverOrder}>
+                    Mark As Delivered
+                  </Button>
                 </ListGroup.Item>
               )}
             </ListGroup>
