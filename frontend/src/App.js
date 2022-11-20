@@ -9,6 +9,7 @@ import {
   EditUserPage,
   HomePage,
   LoginPage,
+  OrderListPage,
   OrderPage,
   PaymentPage,
   PlaceOrderPage,
@@ -34,6 +35,7 @@ function App() {
                 <Route path='/admin/user/:id/edit' element={<EditUserPage />} />
                 <Route path='/admin/productlist' element={<ProductListPage />} />
                 <Route path='/admin/product/:id/edit' element={<EditProductPage />} />
+                <Route path='/admin/orderlist' element={<OrderListPage />} />
               </Route>
               <Route path='/profile' element={<ProfilePage />} />
               <Route path='/shipping' element={<ShippingPage />} />
