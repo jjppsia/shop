@@ -13,14 +13,14 @@ const createProduct = async (req, res, next) => {
   try {
     const product = await Product.create({
       user,
-      name,
-      image,
-      brand,
-      category,
-      description,
-      numReviews,
-      price,
-      countInStock
+      name: 'Sample name',
+      image: '/images/sample.jpg',
+      brand: 'Sample brand',
+      category: 'Sample category',
+      description: 'Sample description',
+      numReviews: 0,
+      price: 0,
+      countInStock: 0
     })
 
     res.status(StatusCodes.CREATED).json(product)
