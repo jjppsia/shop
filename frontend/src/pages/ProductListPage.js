@@ -2,13 +2,12 @@ import React, { useEffect } from 'react'
 import { Button, Col, Row, Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { createProduct, deleteProduct, listProducts } from '../actions/productActions'
 import { Loader, Message } from '../components'
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
 
 function ProductListPage() {
-  const { id } = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const productCreate = useSelector((state) => state.productCreate)
