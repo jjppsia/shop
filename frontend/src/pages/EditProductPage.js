@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useNavigate, useParams } from 'react-router-dom'
-import { listProductDetails } from '../actions/productActions'
+import { listProductDetails, updateProduct } from '../actions/productActions'
 import { FormContainer, Loader, Message } from '../components'
 
 const EditProductPage = () => {
@@ -20,11 +20,18 @@ const EditProductPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const productDetails = useSelector((state) => state.productDetails)
+  const productUpdate = useSelector((state) => state.productUpdate)
 
   const { loading: loadingDetails, error: errorDetails, product } = productDetails
+  const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = productUpdate
 
   useEffect(() => {
     const { _id, name, price, image, brand, category, countInStock, description } = product
+
+    if (successUpdate) {
+      dispatch({ type: 'PRODUCT_UPDATE_RESET' })
+      navigate(`/admin/productlist`)
+    }
 
     if (!name || _id !== id) {
       dispatch(listProductDetails(id))
@@ -37,10 +44,13 @@ const EditProductPage = () => {
     setCategory(category)
     setCountInStock(countInStock)
     setDescription(description)
-  }, [dispatch, id, product])
+  }, [dispatch, id, navigate, product, successUpdate])
 
   const submitHandler = (e) => {
     e.preventDefault()
+
+    dispatch(updateProduct({ id, name, price, image, brand, category, countInStock, description }))
+    dispatch({ type: 'PRODUCT_UPDATE_REQUEST' })
   }
 
   return (
@@ -50,6 +60,8 @@ const EditProductPage = () => {
       </Link>
       <FormContainer>
         <h1>Edit Product</h1>
+        {loadingUpdate && <Loader />}
+        {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
         {loadingDetails ? (
           <Loader />
         ) : errorDetails ? (
