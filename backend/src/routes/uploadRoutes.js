@@ -1,7 +1,6 @@
 import express from 'express'
 import multer from 'multer'
 import path from 'path'
-import { adminAuth, verifyToken } from '../middlewares/auth.js'
 
 const router = express.Router()
 
@@ -10,11 +9,11 @@ const checkFileType = (file, cb) => {
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
   const mimetype = filetypes.test(file.mimetype)
 
-  if (!extname || !mimetype) {
-    cb('Images only!')
+  if (mimetype && extname) {
+    return cb(null, true)
   }
 
-  return cb(null, true)
+  cb('Images only!')
 }
 
 const storage = multer.diskStorage({

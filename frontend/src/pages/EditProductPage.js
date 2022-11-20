@@ -1,12 +1,12 @@
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { listProductDetails, updateProduct } from '../actions/productActions'
 import { FormContainer, Loader, Message } from '../components'
 
-const EditProductPage = () => {
+function EditProductPage() {
   const [name, setName] = useState('')
   const [price, setPrice] = useState(0)
   const [image, setImage] = useState(false)
@@ -19,9 +19,11 @@ const EditProductPage = () => {
   const { id } = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const userLogin = useSelector((state) => state.userLogin)
   const productDetails = useSelector((state) => state.productDetails)
   const productUpdate = useSelector((state) => state.productUpdate)
 
+  const { userInfo } = userLogin
   const { loading: loadingDetails, error: errorDetails, product } = productDetails
   const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = productUpdate
 
@@ -46,11 +48,36 @@ const EditProductPage = () => {
     setDescription(description)
   }, [dispatch, id, navigate, product, successUpdate])
 
-  const submitHandler = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
 
     dispatch(updateProduct({ id, name, price, image, brand, category, countInStock, description }))
     dispatch({ type: 'PRODUCT_UPDATE_REQUEST' })
+  }
+
+  const handleFileUpload = async (e) => {
+    try {
+      const file = e.target.files[0]
+      const formData = new FormData()
+
+      formData.append('image', file)
+      setUploading(true)
+
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${userInfo.token}`
+        }
+      }
+
+      const { data } = await axios.post('/api/v1/upload', formData, config)
+
+      setImage(data)
+      setUploading(false)
+    } catch (error) {
+      console.error(error)
+      setUploading(false)
+    }
   }
 
   return (
@@ -67,7 +94,7 @@ const EditProductPage = () => {
         ) : errorDetails ? (
           <Message variant='danger'>{errorDetails}</Message>
         ) : (
-          <Form onSubmit={submitHandler}>
+          <Form onSubmit={handleSubmit}>
             <Form.Group className='mb-3' controlId='name'>
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -88,15 +115,10 @@ const EditProductPage = () => {
                 required
               />
             </Form.Group>
-            <Form.Group className='mb-3' controlId='image'>
+            <Form.Group className='mb-3' controlId='formFile'>
               <Form.Label>Image</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Enter image url'
-                value={image || false}
-                onChange={(e) => setImage(e.target.value)}
-                required
-              />
+              <Form.Control type='file' onChange={handleFileUpload} required />
+              {uploading && <Loader />}
             </Form.Group>
             <Form.Group className='mb-3' controlId='brand'>
               <Form.Label>Brand</Form.Label>

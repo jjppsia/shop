@@ -26,7 +26,6 @@ app.use('/api/v1/products', productRoutes)
 app.use('/api/v1/users', userRoutes)
 app.use('/api/v1/orders', verifyToken, orderRoutes)
 app.use('/api/v1/upload', verifyToken, adminAuth, uploadRoutes)
-
 app.get('/api/v1/config/paypal', (req, res) => res.send(PAYPAL_CLIENT_ID))
 
 const start = async () => {
