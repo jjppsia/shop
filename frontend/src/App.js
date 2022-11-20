@@ -5,6 +5,7 @@ import { Footer, Header } from './components'
 import {
   AdminPrivateRoute,
   CartPage,
+  EditProductPage,
   EditUserPage,
   HomePage,
   LoginPage,
@@ -32,6 +33,7 @@ function App() {
                 <Route path='/admin/userlist' element={<UserListPage />} />
                 <Route path='/admin/user/:id/edit' element={<EditUserPage />} />
                 <Route path='/admin/productlist' element={<ProductListPage />} />
+                <Route path='/admin/product/:id/edit' element={<EditProductPage />} />
               </Route>
               <Route path='/profile' element={<ProfilePage />} />
               <Route path='/shipping' element={<ShippingPage />} />

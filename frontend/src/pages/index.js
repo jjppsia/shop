@@ -1,5 +1,6 @@
 export { default as AdminPrivateRoute } from './AdminPrivateRoute'
 export { default as CartPage } from './CartPage'
+export { default as EditProductPage } from './EditProductPage'
 export { default as EditUserPage } from './EditUserPage'
 export { default as HomePage } from './HomePage'
 export { default as LoginPage } from './LoginPage'
