@@ -35,8 +35,18 @@ const createProduct = async (req, res, next) => {
  * @access  Public
  */
 const getProducts = async (req, res) => {
+  const { keyword } = req.query
+  console.log(keyword)
+
+  const searchQuery = keyword ? { name: { $regex: keyword, $options: 'i' } } : {}
+
   try {
-    const products = await Product.find({})
+    const products = await Product.find({ ...searchQuery })
+
+    if (products.length === 0) {
+      res.status(StatusCodes.NOT_FOUND)
+      throw new Error('No products found')
+    }
 
     res.status(StatusCodes.OK).json(products)
   } catch (error) {

@@ -46,6 +46,7 @@ function App() {
             <Route path='/' element={<HomePage />} />
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegisterPage />} />
+            <Route path='/search/:keyword' element={<HomePage />} />
             <Route path='/product/:id' element={<ProductPage />} />
             <Route path='/cart'>
               <Route index element={<CartPage />} />
