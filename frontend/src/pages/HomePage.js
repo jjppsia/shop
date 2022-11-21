@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { listProducts } from '../actions/productActions'
-import { Loader, Message, Product } from '../components'
 import { useParams } from 'react-router-dom'
+import { listProducts } from '../actions/productActions'
+import { Loader, Message, Paginate, Product } from '../components'
 
 function HomePage() {
   const dispatch = useDispatch()
   const productList = useSelector((state) => state.productList)
-  const { keyword } = useParams()
+  const { keyword, pageNumber } = useParams()
 
-  const { loading, error, products } = productList
+  const { loading, error, products, page, pages } = productList
 
   useEffect(() => {
-    dispatch(listProducts(keyword))
-  }, [dispatch, keyword])
+    dispatch(listProducts(keyword, pageNumber))
+  }, [dispatch, keyword, pageNumber])
 
   return (
     <>
@@ -32,6 +32,7 @@ function HomePage() {
               </Col>
             ))}
           </Row>
+          <Paginate page={page} pages={pages} keyword={keyword ? keyword : ''} />
         </>
       )}
     </>

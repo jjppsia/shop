@@ -35,20 +35,28 @@ const createProduct = async (req, res, next) => {
  * @access  Public
  */
 const getProducts = async (req, res) => {
-  const { keyword } = req.query
-  console.log(keyword)
+  const { keyword, pageNumber } = req.query
 
   const searchQuery = keyword ? { name: { $regex: keyword, $options: 'i' } } : {}
+  const pageSize = 10
+  const page = Number(pageNumber) || 1
 
   try {
+    const count = await Product.countDocuments({ ...searchQuery })
     const products = await Product.find({ ...searchQuery })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
 
     if (products.length === 0) {
       res.status(StatusCodes.NOT_FOUND)
       throw new Error('No products found')
     }
 
-    res.status(StatusCodes.OK).json(products)
+    res.status(StatusCodes.OK).json({
+      products,
+      page,
+      pages: Math.ceil(count / pageSize)
+    })
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message })
   }
