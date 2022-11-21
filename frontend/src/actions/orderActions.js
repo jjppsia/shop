@@ -36,7 +36,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_CREATE_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message
+      payload: error.response && error.response.data.error ? error.response.data.error : error.message
     })
   }
 }
@@ -57,7 +57,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_DETAILS_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message
+      payload: error.response && error.response.data.error ? error.response.data.error : error.message
     })
   }
 }
@@ -78,7 +78,7 @@ export const payOrder = (orderId, paymentResult) => async (dispatch, getState) =
   } catch (error) {
     dispatch({
       type: ORDER_PAY_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message
+      payload: error.response && error.response.data.error ? error.response.data.error : error.message
     })
   }
 }
@@ -99,7 +99,7 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_DELIVER_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message
+      payload: error.response && error.response.data.error ? error.response.data.error : error.message
     })
   }
 }
@@ -120,7 +120,7 @@ export const listOrders = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_LIST_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message
+      payload: error.response && error.response.data.error ? error.response.data.error : error.message
     })
   }
 }
@@ -141,7 +141,7 @@ export const listUserOrders = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_LIST_OF_USER_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message
+      payload: error.response && error.response.data.error ? error.response.data.error : error.message
     })
   }
 }

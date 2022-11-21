@@ -28,7 +28,7 @@ const addOrderItems = async (req, res) => {
 
     res.status(StatusCodes.CREATED).json(order)
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message })
   }
 }
 
@@ -43,7 +43,7 @@ const getOrders = async (req, res) => {
 
     res.status(StatusCodes.OK).json(orders)
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message })
   }
 }
 
@@ -65,7 +65,7 @@ const getOrderById = async (req, res) => {
 
     res.status(StatusCodes.OK).json(order)
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message })
   }
 }
 
@@ -87,7 +87,7 @@ const getUserOrders = async (req, res) => {
 
     res.json(orders)
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message })
   }
 }
 
@@ -127,7 +127,7 @@ const updateOrderToPaid = async (req, res) => {
 
     res.status(StatusCodes.OK).json(updatedOrder)
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message })
   }
 }
 
@@ -151,7 +151,7 @@ const updateOrderToDelivered = async (req, res) => {
 
     res.status(StatusCodes.OK).json(updatedOrder)
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message })
   }
 }
 

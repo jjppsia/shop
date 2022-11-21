@@ -36,7 +36,7 @@ const registerUser = async (req, res) => {
       isAdmin: newUser.isAdmin
     })
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message })
   }
 }
 
@@ -64,7 +64,7 @@ const authUser = async (req, res) => {
       token: generateToken(user._id)
     })
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message })
   }
 }
 
@@ -79,7 +79,7 @@ const getUsers = async (req, res) => {
 
     res.status(StatusCodes.OK).json(users)
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message })
   }
 }
 
@@ -102,7 +102,7 @@ const getUserById = async (req, res) => {
 
     res.status(StatusCodes.OK).json(user)
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message })
   }
 }
 
@@ -129,7 +129,7 @@ const getUserProfile = async (req, res) => {
       isAdmin: user.isAdmin
     })
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message })
   }
 }
 
@@ -160,7 +160,7 @@ const updateUser = async (req, res) => {
       isAdmin: updatedUser.isAdmin
     })
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message })
   }
 }
 
@@ -191,7 +191,7 @@ const updateUserProfile = async (req, res) => {
       token: generateToken(updatedUser._id)
     })
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message })
   }
 }
 
@@ -213,9 +213,9 @@ const deleteUser = async (req, res) => {
 
     await User.deleteOne({ _id })
 
-    res.status(StatusCodes.OK).json({ message: 'User removed' })
+    res.status(StatusCodes.OK).json({ error: 'User removed' })
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message })
   }
 }
 

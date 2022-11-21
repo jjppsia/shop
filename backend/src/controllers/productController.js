@@ -154,7 +154,7 @@ const createProductReview = async (req, res, next) => {
 
     await product.save()
 
-    res.status(StatusCodes.CREATED).json({ message: 'Review added' })
+    res.status(StatusCodes.CREATED).json({ error: 'Review added' })
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message })
   }
