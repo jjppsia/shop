@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Form, Image, ListGroup, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { listProductDetails, createProductReview } from '../actions/productActions'
-import { Loader, Message, Rating } from '../components'
+import { createProductReview, listProductDetails } from '../actions/productActions'
+import { Loader, Message, Meta, Rating } from '../components'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 
 function ProductPage() {
@@ -46,6 +46,7 @@ function ProductPage() {
 
   return (
     <>
+      <Meta title={product.name} />
       <Link className='btn btn-light my-3' to='/'>
         Go Back
       </Link>
