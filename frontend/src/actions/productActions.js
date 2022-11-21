@@ -18,7 +18,10 @@ import {
   PRODUCT_UPDATE_FAIL,
   PRODUCT_UPDATE_REQUEST,
   PRODUCT_UPDATE_RESET,
-  PRODUCT_UPDATE_SUCCESS
+  PRODUCT_UPDATE_SUCCESS,
+  PRODUCT_TOP_FAIL,
+  PRODUCT_TOP_REQUEST,
+  PRODUCT_TOP_SUCCESS
 } from '../constants/productConstants'
 
 export const createProduct = () => async (dispatch, getState) => {
@@ -58,6 +61,21 @@ export const listProducts =
       })
     }
   }
+
+export const listTopRatedProducts = () => async (dispatch) => {
+  try {
+    dispatch({ type: PRODUCT_TOP_REQUEST })
+
+    const { data } = await axios.get(`/api/v1/products/top`)
+
+    dispatch({ type: PRODUCT_TOP_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_TOP_FAIL,
+      payload: error.response && error.response.data.error ? error.response.data.error : error.message
+    })
+  }
+}
 
 export const listProductDetails = (id) => async (dispatch) => {
   try {

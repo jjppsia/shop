@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { listProducts } from '../actions/productActions'
-import { Loader, Message, Paginate, Product } from '../components'
+import { Loader, Message, Paginate, Product, ProductCarousel } from '../components'
 
 function HomePage() {
   const dispatch = useDispatch()
@@ -18,6 +18,13 @@ function HomePage() {
 
   return (
     <>
+      {!keyword ? (
+        <ProductCarousel />
+      ) : (
+        <Link to='/' className='btn btn-light'>
+          Go Back
+        </Link>
+      )}
       {error ? (
         <Message variant='danger'>{error}</Message>
       ) : loading ? (

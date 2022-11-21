@@ -63,6 +63,21 @@ const getProducts = async (req, res) => {
 }
 
 /**
+ * @desc    Get top rated products
+ * @route   GET /api/v1/products/top
+ * @access  Public
+ */
+const getTopProducts = async (req, res, next) => {
+  try {
+    const products = await Product.find({}).sort({ rating: -1 }).limit(3)
+
+    res.status(StatusCodes.OK).json(products)
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message })
+  }
+}
+
+/**
  * @desc    Fetch single product
  * @route   GET /api/v1/products/:id
  * @access  Public
@@ -178,4 +193,4 @@ const createProductReview = async (req, res, next) => {
   }
 }
 
-export { createProduct, createProductReview, getProducts, getProductById, updateProduct, deleteProduct }
+export { createProduct, createProductReview, getProducts, getTopProducts, getProductById, updateProduct, deleteProduct }
