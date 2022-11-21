@@ -9,7 +9,8 @@
     "dev": "nodemon src/index.js",
     "pretty": "prettier --write .",
     "data:import": "node src/seeder",
-    "data:destroy": "node src/seeder -d"
+    "data:destroy": "node src/seeder -d",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
   "author": "",
